@@ -2045,6 +2045,23 @@ class Client
     }
 
     /**
+     * Delete an admin entirely
+     *
+     * NOTES:
+     * Make sure the admin is revoked from all the sites before deleting
+     *
+     * @param string $admin_id _id value of the admin to delete, can be obtained using the
+     *                         list_all_admins() method/function
+     * @return bool true on success
+     */
+    public function delete_admin(string $admin_id): bool
+    {
+        $payload = ['cmd' => 'revoke-super-admin', 'admin' => $admin_id];
+
+        return $this->fetch_results_boolean('/api/s/' . $this->site . '/cmd/sitemgr', $payload);
+    }
+
+    /**
      * Fetch WLAN groups
      *
      * @return array|bool containing known wlan_groups
